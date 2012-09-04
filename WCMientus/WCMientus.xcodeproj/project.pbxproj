@@ -17,6 +17,11 @@
 		0688F05715F4ACBF00654C08 /* WCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0688F05615F4ACBF00654C08 /* WCViewController.m */; };
 		0688F06B15F4ADA900654C08 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0688F06715F4AD9B00654C08 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0688F06D15F4ADA900654C08 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0688F06915F4AD9B00654C08 /* NSString+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		06DCB2F115F62B430053D8A2 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2ED15F62B430053D8A2 /* NSString+MD5.m */; };
+		06DCB2F215F62B430053D8A2 /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2F015F62B430053D8A2 /* UIDevice+IdentifierAddition.m */; };
+		06DCB2F715F62C180053D8A2 /* NSDate+Additional.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2F615F62C180053D8A2 /* NSDate+Additional.m */; };
+		06DCB2FB15F62C280053D8A2 /* NSArray+Plist.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2FA15F62C280053D8A2 /* NSArray+Plist.m */; };
+		06DCB2FF15F62C6A0053D8A2 /* CFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2FE15F62C6A0053D8A2 /* CFAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +42,16 @@
 		0688F06715F4AD9B00654C08 /* NSData+Base64.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "External/Base64/NSData+Base64.m"; sourceTree = "<group>"; };
 		0688F06815F4AD9B00654C08 /* NSString+Base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+Base64.h"; path = "External/Base64/NSString+Base64.h"; sourceTree = "<group>"; };
 		0688F06915F4AD9B00654C08 /* NSString+Base64.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+Base64.m"; path = "External/Base64/NSString+Base64.m"; sourceTree = "<group>"; };
+		06DCB2EC15F62B430053D8A2 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		06DCB2ED15F62B430053D8A2 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		06DCB2EF15F62B430053D8A2 /* UIDevice+IdentifierAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+IdentifierAddition.h"; sourceTree = "<group>"; };
+		06DCB2F015F62B430053D8A2 /* UIDevice+IdentifierAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+IdentifierAddition.m"; sourceTree = "<group>"; };
+		06DCB2F515F62C180053D8A2 /* NSDate+Additional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Additional.h"; sourceTree = "<group>"; };
+		06DCB2F615F62C180053D8A2 /* NSDate+Additional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Additional.m"; sourceTree = "<group>"; };
+		06DCB2F915F62C280053D8A2 /* NSArray+Plist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Plist.h"; sourceTree = "<group>"; };
+		06DCB2FA15F62C280053D8A2 /* NSArray+Plist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Plist.m"; sourceTree = "<group>"; };
+		06DCB2FD15F62C6A0053D8A2 /* CFAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFAlertView.h; sourceTree = "<group>"; };
+		06DCB2FE15F62C6A0053D8A2 /* CFAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +123,11 @@
 		0688F05D15F4ACE900654C08 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				06DCB2FC15F62C6A0053D8A2 /* CFAlertView */,
+				06DCB2F815F62C280053D8A2 /* NSArray+Plist */,
+				06DCB2F415F62C180053D8A2 /* NSDate+Additional */,
+				06DCB2EB15F62B430053D8A2 /* MD5 */,
+				06DCB2EE15F62B430053D8A2 /* UDevice+Identifier */,
 				0688F05E15F4AD0700654C08 /* Base64 */,
 			);
 			name = External;
@@ -122,6 +142,56 @@
 				0688F06915F4AD9B00654C08 /* NSString+Base64.m */,
 			);
 			name = Base64;
+			sourceTree = "<group>";
+		};
+		06DCB2EB15F62B430053D8A2 /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
+				06DCB2EC15F62B430053D8A2 /* NSString+MD5.h */,
+				06DCB2ED15F62B430053D8A2 /* NSString+MD5.m */,
+			);
+			name = MD5;
+			path = External/MD5;
+			sourceTree = "<group>";
+		};
+		06DCB2EE15F62B430053D8A2 /* UDevice+Identifier */ = {
+			isa = PBXGroup;
+			children = (
+				06DCB2EF15F62B430053D8A2 /* UIDevice+IdentifierAddition.h */,
+				06DCB2F015F62B430053D8A2 /* UIDevice+IdentifierAddition.m */,
+			);
+			name = "UDevice+Identifier";
+			path = "External/UDevice+Identifier";
+			sourceTree = "<group>";
+		};
+		06DCB2F415F62C180053D8A2 /* NSDate+Additional */ = {
+			isa = PBXGroup;
+			children = (
+				06DCB2F515F62C180053D8A2 /* NSDate+Additional.h */,
+				06DCB2F615F62C180053D8A2 /* NSDate+Additional.m */,
+			);
+			name = "NSDate+Additional";
+			path = "External/NSDate+Additional";
+			sourceTree = "<group>";
+		};
+		06DCB2F815F62C280053D8A2 /* NSArray+Plist */ = {
+			isa = PBXGroup;
+			children = (
+				06DCB2F915F62C280053D8A2 /* NSArray+Plist.h */,
+				06DCB2FA15F62C280053D8A2 /* NSArray+Plist.m */,
+			);
+			name = "NSArray+Plist";
+			path = "External/NSArray+Plist";
+			sourceTree = "<group>";
+		};
+		06DCB2FC15F62C6A0053D8A2 /* CFAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				06DCB2FD15F62C6A0053D8A2 /* CFAlertView.h */,
+				06DCB2FE15F62C6A0053D8A2 /* CFAlertView.m */,
+			);
+			name = CFAlertView;
+			path = External/CFAlertView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +263,11 @@
 				0688F04D15F4ACBF00654C08 /* main.m in Sources */,
 				0688F05115F4ACBF00654C08 /* WCAppDelegate.m in Sources */,
 				0688F05715F4ACBF00654C08 /* WCViewController.m in Sources */,
+				06DCB2F115F62B430053D8A2 /* NSString+MD5.m in Sources */,
+				06DCB2F215F62B430053D8A2 /* UIDevice+IdentifierAddition.m in Sources */,
+				06DCB2F715F62C180053D8A2 /* NSDate+Additional.m in Sources */,
+				06DCB2FB15F62C280053D8A2 /* NSArray+Plist.m in Sources */,
+				06DCB2FF15F62C6A0053D8A2 /* CFAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +381,7 @@
 				0688F05C15F4ACBF00654C08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
