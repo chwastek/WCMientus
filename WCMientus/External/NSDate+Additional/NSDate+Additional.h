@@ -22,4 +22,6 @@
 - (NSDate *)toLocalTime;
 - (NSDate *)toGlobalTime;
 
+- (void)testowaMetoda;
+
 @end
