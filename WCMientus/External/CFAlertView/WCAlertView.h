@@ -51,6 +51,7 @@ typedef NS_ENUM(NSInteger, WCAlertViewStyle)
 @property (nonatomic,assign) CGFloat cornerRadius;
 /*
  * Inner frame shadow (optional)
+ * Stroke path to cover up pixialation on corners from clipping!
  */
 @property (nonatomic,strong) UIColor *innerFrameShadowColor;
 @property (nonatomic,strong) UIColor *innerFrameStrokeColor;

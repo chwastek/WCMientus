@@ -122,7 +122,7 @@
     self.gradientLocations = @[ @0.0f, @0.57f, @1.0f];
     self.cornerRadius = 10.0f;
     self.labelTextColor = [UIColor whiteColor];
-    self.outerFrameLineWidth = 3.0f;
+    self.outerFrameLineWidth = 2.0f;
     self.outerFrameShadowBlur = 6.0f;
     self.outerFrameShadowColor = [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:1.0f];
     self.outerFrameShadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -161,14 +161,14 @@
 - (void)violetAlertHetched:(BOOL)hatched
 {
     self.labelTextColor = [UIColor whiteColor];
-    self.labelShadowColor = [UIColor colorWithRed:0.004 green:0.003 blue:0.006 alpha:1.000];
+    self.labelShadowColor = [UIColor colorWithRed:0.004 green:0.003 blue:0.006 alpha:0.700];
     
     UIColor *topGradient = [UIColor colorWithRed:0.66f green:0.63f blue:1.00f alpha:1.00f];
     UIColor *middleGradient = [UIColor colorWithRed:0.508 green:0.498 blue:0.812 alpha:1.000];
     UIColor *bottomGradient = [UIColor colorWithRed:0.419 green:0.405 blue:0.654 alpha:1.000];
     self.gradientColors = @[topGradient,middleGradient,bottomGradient];
     
-    self.outerFrameColor = [UIColor colorWithRed:0.25f green:0.25f blue:0.41f alpha:1.00f];
+    self.outerFrameColor = [UIColor whiteColor];
     self.innerFrameStrokeColor = [UIColor colorWithRed:0.25f green:0.25f blue:0.41f alpha:1.00f];
     self.innerFrameShadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
     
@@ -176,13 +176,13 @@
     self.buttonShadowBlur = 2.0;
     self.buttonShadowColor = [UIColor colorWithRed:0.004 green:0.003 blue:0.006 alpha:1.000];
     
-    self.outerFrameLineWidth = 0.5f;
-    
-    self.outerFrameShadowOffset = CGSizeMake(0.0, 0.0);
-    self.outerFrameShadowBlur = 0.0;
-    self.outerFrameShadowColor = [UIColor clearColor];
     
     if (hatched) {
+        self.outerFrameColor = [UIColor colorWithRed:0.25f green:0.25f blue:0.41f alpha:1.00f];
+        self.outerFrameShadowOffset = CGSizeMake(0.0, 0.0);
+        self.outerFrameShadowBlur = 0.0;
+        self.outerFrameShadowColor = [UIColor clearColor];
+        self.outerFrameLineWidth = 0.5f;
         self.verticalLineColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
         self.hatchedLinesColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.1];
     }
@@ -283,11 +283,13 @@
         
         CGRect activeBounds = self.bounds;
         CGFloat cornerRadius = self.cornerRadius;
-        CGFloat inset = 6.5f;
+        CGFloat inset = 6.0f;
         CGFloat originX = activeBounds.origin.x + inset;
         CGFloat originY = activeBounds.origin.y + inset;
         CGFloat width = activeBounds.size.width - (inset*2.0f);
-        CGFloat height = activeBounds.size.height - (inset*2.0f);
+        CGFloat height = activeBounds.size.height - ((inset+2.5)*2.0f);
+        
+        CGFloat buttonOffset = self.bounds.size.height - 48.5f;
         
         CGRect bPathFrame = CGRectMake(originX, originY, width, height);
         CGPathRef path = [UIBezierPath bezierPathWithRoundedRect:bPathFrame cornerRadius:cornerRadius].CGPath;
@@ -351,7 +353,6 @@
          */
         
         if (self.hatchedLinesColor || self.hatchedBackgroundColor) {
-            CGFloat buttonOffset = 92.5f; //Offset buttonOffset by half point for crisp lines
             CGContextSaveGState(context); //Save Context State Before Clipping "hatchPath"
             CGRect hatchFrame = CGRectMake(0.0f, buttonOffset-15, activeBounds.size.width, (activeBounds.size.height - buttonOffset+1.0f)+15);
             CGContextClipToRect(context, hatchFrame);
@@ -389,7 +390,6 @@
          */
         
         if (self.verticalLineColor) {
-            CGFloat buttonOffset = 92.5f;
             CGMutablePathRef linePath = CGPathCreateMutable();
             CGFloat linePathY = (buttonOffset - 1.0f) - 15;
             CGPathMoveToPoint(linePath, NULL, 0.0f, linePathY);
