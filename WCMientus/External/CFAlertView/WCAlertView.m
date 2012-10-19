@@ -6,15 +6,15 @@
 //  Copyright (c) 2012 Codeflex limited. All rights reserved.
 //
 
-#import "CFAlertView.h"
+#import "WCAlertView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 
-@interface CFAlertView () <UIAlertViewDelegate>
+@interface WCAlertView () <UIAlertViewDelegate>
 
 @end
 
-@implementation CFAlertView
+@implementation WCAlertView
 @synthesize buttonShadowColor = _buttonShadowColor;
 @synthesize buttonShadowOffset = _buttonShadowOffset;
 @synthesize buttonTextColor = _buttonTextColor;
@@ -23,13 +23,15 @@
 @synthesize hatchedLinesColor = _hatchedLinesColor;
 @synthesize outerFrameColor = _outerFrameColor;
 @synthesize hatchedBackgroundColor = _hatchedBackgroundColor;
-@synthesize alertType = _alertType;
+@synthesize style = _style;
+@synthesize buttonShadowBlur = _buttonShadowBlur;
+@synthesize buttonFont = _buttonFont;
 
 
-+ (id)alertWithTitle:(NSString *)title message:(NSString *)message customizationBlock:(void (^)(CFAlertView *alertView))customization completionBlock:(void (^)(NSUInteger buttonIndex, CFAlertView *alertView))block cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
++ (id)showAlertWithTitle:(NSString *)title message:(NSString *)message customizationBlock:(void (^)(WCAlertView *alertView))customization completionBlock:(void (^)(NSUInteger buttonIndex, WCAlertView *alertView))block cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
 {
 
-    CFAlertView *alertView = [[self alloc] initWithTitle:title message:message completionBlock:block cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
+    WCAlertView *alertView = [[self alloc] initWithTitle:title message:message completionBlock:block cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
     
     if (otherButtonTitles != nil) {
         id eachObject;
@@ -58,7 +60,7 @@
 {
     if (self = [super initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil]) {
         
-        self.alertType = CFAlertViewTypeWhite;
+        [self setDefaultStyle];
         
         va_list args;
         va_start(args, otherButtonTitles);
@@ -70,12 +72,11 @@
 }
 
 
-- (id)initWithTitle:(NSString *)title message:(NSString *)message completionBlock:(void (^)(NSUInteger buttonIndex, CFAlertView *alertView))block cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
+- (id)initWithTitle:(NSString *)title message:(NSString *)message completionBlock:(void (^)(NSUInteger buttonIndex, WCAlertView *alertView))block cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... {
 	objc_setAssociatedObject(self, "blockCallback", [block copy], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 	
 	if (self = [self initWithTitle:title message:message delegate:self cancelButtonTitle:nil otherButtonTitles:nil]) {
         
-        self.alertType = CFAlertViewTypeDefault;
 		
 		if (cancelButtonTitle) {
 			[self addButtonWithTitle:cancelButtonTitle];
@@ -104,34 +105,86 @@
 	
 }
 
-- (void)setAlertType:(CFAlertViewType)alertType
+- (void)setStyle:(WCAlertViewStyle)style
 {
-    if (alertType != _alertType) {
-        _alertType = alertType;
-        [self customizeWithAlertType:_alertType];
+    if (style != _style) {
+        _style = style;
+        [self customizeAlertViewStyle:style];
     }
 }
 
-- (void)customizeWithAlertType:(CFAlertViewType)type
+- (void)setDefaultStyle
 {
-    switch (type) {
-        case CFAlertViewTypeDefault:
+    self.style = WCAlertViewStyleDefault;
+    self.buttonShadowBlur = 2.0f;
+    self.buttonShadowOffset = CGSizeMake(0.5f, 0.5f);
+    self.labelShadowOffset = CGSizeMake(0.0f, 1.0f);
+    self.gradientLocations = @[ @0.0f, @0.57f, @1.0f];
+    self.cornerRadius = 10.0f;
+    self.labelTextColor = [UIColor whiteColor];
+    self.outerFrameLineWidth = 3.0f;
+    self.outerFrameShadowBlur = 6.0f;
+    self.outerFrameShadowColor = [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:1.0f];
+    self.outerFrameShadowOffset = CGSizeMake(0.0f, 1.0f);
+    
+}
+
+- (void)customizeAlertViewStyle:(WCAlertViewStyle)style
+{
+    switch (style) {
+        case WCAlertViewStyleDefault:
             break;
-        case CFAlertViewTypeWhite:
+        case WCAlertViewStyleWhite:
             [self whiteAlertHatched:NO];
             break;
-        case CFAlertViewTypeWhiteHatched:
-            [self whiteAlertHatched:NO];
+        case WCAlertViewStyleWhiteHatched:
+            [self whiteAlertHatched:YES];
             break;
-        case CFAlertViewTypeBlack:
+        case WCAlertViewStyleBlack:
             [self blackAlertHatched:NO];
             break;
-        case CFAlertViewTypeBlackHatched:
+        case WCAlertViewStyleBlackHatched:
             [self blackAlertHatched:YES];
             break;
-        default:
-            self.alertType = CFAlertViewTypeDefault;
+        case WCAlertViewStyleViolet:
+            [self violetAlertHetched:NO];
             break;
+        case WCAlertViewStyleVioletHatched:
+            [self violetAlertHetched:YES];
+            break;
+        default:
+            self.style = WCAlertViewStyleDefault;
+            break;
+    }
+}
+
+- (void)violetAlertHetched:(BOOL)hatched
+{
+    self.labelTextColor = [UIColor whiteColor];
+    self.labelShadowColor = [UIColor colorWithRed:0.004 green:0.003 blue:0.006 alpha:1.000];
+    
+    UIColor *topGradient = [UIColor colorWithRed:0.66f green:0.63f blue:1.00f alpha:1.00f];
+    UIColor *middleGradient = [UIColor colorWithRed:0.508 green:0.498 blue:0.812 alpha:1.000];
+    UIColor *bottomGradient = [UIColor colorWithRed:0.419 green:0.405 blue:0.654 alpha:1.000];
+    self.gradientColors = @[topGradient,middleGradient,bottomGradient];
+    
+    self.outerFrameColor = [UIColor colorWithRed:0.25f green:0.25f blue:0.41f alpha:1.00f];
+    self.innerFrameStrokeColor = [UIColor colorWithRed:0.25f green:0.25f blue:0.41f alpha:1.00f];
+    self.innerFrameShadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.2];
+    
+    self.buttonTextColor = [UIColor whiteColor];
+    self.buttonShadowBlur = 2.0;
+    self.buttonShadowColor = [UIColor colorWithRed:0.004 green:0.003 blue:0.006 alpha:1.000];
+    
+    self.outerFrameLineWidth = 0.5f;
+    
+    self.outerFrameShadowOffset = CGSizeMake(0.0, 0.0);
+    self.outerFrameShadowBlur = 0.0;
+    self.outerFrameShadowColor = [UIColor clearColor];
+    
+    if (hatched) {
+        self.verticalLineColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+        self.hatchedLinesColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.1];
     }
 }
 
@@ -139,15 +192,12 @@
 {
     self.labelTextColor = [UIColor colorWithRed:0.11f green:0.08f blue:0.39f alpha:1.00f];
     self.labelShadowColor = [UIColor whiteColor];
-    self.labelShadowOffset = CGSizeMake(0.0f, 1.0f);
-    
-    self.gradientLocations = @[ @0.0f, @0.57f, @1.0f ];
     
     UIColor *topGradient = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
     UIColor *middleGradient = [UIColor colorWithRed:0.93f green:0.94f blue:0.96f alpha:1.0f];
     UIColor *bottomGradient = [UIColor colorWithRed:0.89f green:0.89f blue:0.92f alpha:1.00f];
-    
     self.gradientColors = @[topGradient,middleGradient,bottomGradient];
+    
     self.outerFrameColor = [UIColor colorWithRed:250.0f/255.0f green:250.0f/255.0f blue:250.0f/255.0f alpha:1.0f];
     
     self.buttonTextColor = [UIColor colorWithRed:0.11f green:0.08f blue:0.39f alpha:1.00f];
@@ -165,23 +215,18 @@
     self.labelShadowColor = [UIColor blackColor];
     self.labelShadowOffset = CGSizeMake(0.0f, 1.0f);
     
-    self.gradientLocations = @[ @0.0f, @0.57f, @1.0f ];
-    
     UIColor *topGradient = [UIColor colorWithRed:0.27f green:0.27f blue:0.27f alpha:1.0f];
     UIColor *middleGradient = [UIColor colorWithRed:0.21f green:0.21f blue:0.21f alpha:1.0f];
     UIColor *bottomGradient = [UIColor colorWithRed:0.15f green:0.15f blue:0.15f alpha:1.00f];
-    
     self.gradientColors = @[topGradient,middleGradient,bottomGradient];
     
     self.outerFrameColor = [UIColor colorWithRed:210.0f/255.0f green:210.0f/255.0f blue:210.0f/255.0f alpha:1.0f];
     
     self.buttonTextColor = [UIColor colorWithRed:210.0f/255.0f green:210.0f/255.0f blue:210.0f/255.0f alpha:1.0f];
     self.buttonShadowColor = [UIColor blackColor];
-    self.buttonShadowOffset = CGSizeMake(0.5, 0.5);
     
     if (hatched) {
         self.verticalLineColor = [UIColor blackColor];
-        self.innerFrameShadowColor = [UIColor colorWithRed:210.0f/255.0f green:210.0f/255.0f blue:210.0f/255.0f alpha:1.0f];
         self.innerFrameShadowColor = [UIColor blackColor];
         self.hatchedLinesColor = [UIColor blackColor];
     }
@@ -192,23 +237,25 @@
 #pragma mark UIView Overrides
 - (void)layoutSubviews
 {
-    if (self.alertType) {
-        for (UIView *subview in self.subviews){ //Fast Enumeration
-            //		NSLog(@"subview class :%@",[subview class]); //Get Class Description of Each Subview
+    [super layoutSubviews];
+    
+    if (self.style) {
+        for (UIView *subview in self.subviews){
             
-            
-            if ([subview isMemberOfClass:[UIImageView class]]) { //Find UIImageView Containing Blue Background
-                subview.hidden = YES; //Hide UIImageView Containing Blue Background
-                // [subview removeFromSuperview]; Also Works
+            //Find and hide UIImageView Containing Blue Background
+            if ([subview isMemberOfClass:[UIImageView class]]) {
+                subview.hidden = YES; 
             }
             
-            if ([subview isMemberOfClass:[UILabel class]]) { //Point to UILabels To Change Text
-                UILabel *label = (UILabel*)subview;	//Cast From UIView to UILabel
+            //Find and get styles of UILabels
+            if ([subview isMemberOfClass:[UILabel class]]) {
+                UILabel *label = (UILabel*)subview;	
                 label.textColor = self.labelTextColor;
                 label.shadowColor = self.labelShadowColor;
                 label.shadowOffset = self.labelShadowOffset;
             }
             
+            // Hide button title labels
             if ([subview isKindOfClass:[UIButton class]]) {
                 UIButton *button = (UIButton *)subview;
                 button.titleLabel.alpha = 0;
@@ -220,13 +267,22 @@
 
 - (void)drawRect:(CGRect)rect 
 {
-    if (self.alertType) {
-        //////////////GET REFERENCE TO CURRENT GRAPHICS CONTEXT
+    [super drawRect:rect];
+    
+    if (self.style) {
+        
+        /*
+         *  Current graphics context
+         */
+        
         CGContextRef context = UIGraphicsGetCurrentContext();
         
-        //////////////CREATE BASE SHAPE WITH ROUNDED CORNERS FROM BOUNDS
+        /*
+         *  Create base shape with rounded corners from bounds
+         */
+        
         CGRect activeBounds = self.bounds;
-        CGFloat cornerRadius = 10.0f;
+        CGFloat cornerRadius = self.cornerRadius;
         CGFloat inset = 6.5f;
         CGFloat originX = activeBounds.origin.x + inset;
         CGFloat originY = activeBounds.origin.y + inset;
@@ -236,18 +292,28 @@
         CGRect bPathFrame = CGRectMake(originX, originY, width, height);
         CGPathRef path = [UIBezierPath bezierPathWithRoundedRect:bPathFrame cornerRadius:cornerRadius].CGPath;
         
-        //////////////CREATE BASE SHAPE WITH FILL AND SHADOW
+        /*
+         *  Create base shape with fill and shadow
+         */
+        
         CGContextAddPath(context, path);
         CGContextSetFillColorWithColor(context, [UIColor colorWithRed:210.0f/255.0f green:210.0f/255.0f blue:210.0f/255.0f alpha:1.0f].CGColor);
-        CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 1.0f), 6.0f, [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:1.0f].CGColor);
+        CGContextSetShadowWithColor(context, self.outerFrameShadowOffset, self.outerFrameShadowBlur, self.outerFrameShadowColor.CGColor);
         CGContextDrawPath(context, kCGPathFill);
         
-        //////////////CLIP STATE
+        /*
+         *  Clip state
+         */
+        
         CGContextSaveGState(context); //Save Context State Before Clipping To "path"
         CGContextAddPath(context, path);
         CGContextClip(context);
         
         //////////////DRAW GRADIENT
+        /*
+         *  Draw grafient from gradientLocations
+         */
+        
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         size_t count = [self.gradientLocations count];
         
@@ -256,8 +322,8 @@
             locations[idx] = [((NSNumber *)obj) floatValue];
         }];
         
-        
         CGFloat *components = malloc([self.gradientColors count] * 4 * sizeof(CGFloat));
+        
         [self.gradientColors enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             UIColor *color = (UIColor *)obj;
             
@@ -280,7 +346,10 @@
         free(locations);
         free(components);
         
-        //////////////HATCHED BACKGROUND
+        /*
+         *  Hatched background
+         */
+        
         if (self.hatchedLinesColor || self.hatchedBackgroundColor) {
             CGFloat buttonOffset = 92.5f; //Offset buttonOffset by half point for crisp lines
             CGContextSaveGState(context); //Save Context State Before Clipping "hatchPath"
@@ -315,7 +384,10 @@
             CGContextRestoreGState(context); //Restore Last Context State Before Clipping "hatchPath"
         }
         
-        //////////////DRAW LINE
+        /*
+         * Draw vertical line
+         */
+        
         if (self.verticalLineColor) {
             CGFloat buttonOffset = 92.5f;
             CGMutablePathRef linePath = CGPathCreateMutable();
@@ -332,7 +404,10 @@
             CGContextRestoreGState(context); //Restore Context State After Drawing "linePath" Shadow
         }
         
-        //////////////STROKE PATH FOR INNER SHADOW
+        /*
+         *  Stroke color for inner path
+         */
+        
         if (self.innerFrameShadowColor || self.innerFrameStrokeColor) {
             CGContextAddPath(context, path);
             CGContextSetLineWidth(context, 3.0f);
@@ -347,17 +422,22 @@
             CGContextDrawPath(context, kCGPathStroke);
         }
         
-        //////////////STROKE PATH TO COVER UP PIXILATION ON CORNERS FROM CLIPPING
+        /*
+         * Stroke path to cover up pixialation on corners from clipping
+         */
+        
         CGContextRestoreGState(context); //Restore First Context State Before Clipping "path"
         CGContextAddPath(context, path);
-        CGContextSetLineWidth(context, 3.0f);
+        CGContextSetLineWidth(context, self.outerFrameLineWidth);
         CGContextSetStrokeColorWithColor(context, self.outerFrameColor.CGColor);
         CGContextSetShadowWithColor(context, CGSizeMake(0.0f, 0.0f), 0.0f, [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.1f].CGColor);
         CGContextDrawPath(context, kCGPathStroke);
         
-        //////////////DRAWING BUTTON LABELS
+        /*
+         *  Drawing button labels
+         */
         
-        for (UIView *subview in self.subviews){ //Fast Enumeration
+        for (UIView *subview in self.subviews){
             
             if ([subview isKindOfClass:[UIButton class]])
             {
@@ -365,9 +445,22 @@
                 
                 CGContextSetTextDrawingMode(context, kCGTextFill);
                 CGContextSetFillColorWithColor(context, self.buttonTextColor.CGColor);
-                CGContextSetShadowWithColor(context, self.buttonShadowOffset, 2.0f, self.buttonShadowColor.CGColor);
+                CGContextSetShadowWithColor(context, self.buttonShadowOffset, self.buttonShadowBlur, self.buttonShadowColor.CGColor);
                 
-                [button.titleLabel.text drawInRect:CGRectMake(button.frame.origin.x, button.frame.origin.y+10, button.frame.size.width, button.frame.size.height) withFont:[UIFont fontWithName:@"Helvetica-Bold" size:18.0] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+                UIFont *buttonFont = button.titleLabel.font;
+                
+                if (self.buttonFont)
+                    buttonFont = self.buttonFont;
+                
+                
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_6_0
+                
+                [button.titleLabel.text drawInRect:CGRectMake(button.frame.origin.x, button.frame.origin.y+10, button.frame.size.width, button.frame.size.height) withFont:buttonFont lineBreakMode:NSLineBreakByClipping alignment:NSTextAlignmentCenter];
+#else
+                [button.titleLabel.text drawInRect:CGRectMake(button.frame.origin.x, button.frame.origin.y+10, button.frame.size.width, button.frame.size.height) withFont:buttonFont lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+                
+#endif
+                
             }
             
         }

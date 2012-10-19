@@ -21,7 +21,7 @@
 		06DCB2F215F62B430053D8A2 /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2F015F62B430053D8A2 /* UIDevice+IdentifierAddition.m */; };
 		06DCB2F715F62C180053D8A2 /* NSDate+Additional.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2F615F62C180053D8A2 /* NSDate+Additional.m */; };
 		06DCB2FB15F62C280053D8A2 /* NSArray+Plist.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2FA15F62C280053D8A2 /* NSArray+Plist.m */; };
-		06DCB2FF15F62C6A0053D8A2 /* CFAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2FE15F62C6A0053D8A2 /* CFAlertView.m */; };
+		06DCB2FF15F62C6A0053D8A2 /* WCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06DCB2FE15F62C6A0053D8A2 /* WCAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,8 +50,8 @@
 		06DCB2F615F62C180053D8A2 /* NSDate+Additional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Additional.m"; sourceTree = "<group>"; };
 		06DCB2F915F62C280053D8A2 /* NSArray+Plist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Plist.h"; sourceTree = "<group>"; };
 		06DCB2FA15F62C280053D8A2 /* NSArray+Plist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Plist.m"; sourceTree = "<group>"; };
-		06DCB2FD15F62C6A0053D8A2 /* CFAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFAlertView.h; sourceTree = "<group>"; };
-		06DCB2FE15F62C6A0053D8A2 /* CFAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFAlertView.m; sourceTree = "<group>"; };
+		06DCB2FD15F62C6A0053D8A2 /* WCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCAlertView.h; sourceTree = "<group>"; };
+		06DCB2FE15F62C6A0053D8A2 /* WCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,8 +187,8 @@
 		06DCB2FC15F62C6A0053D8A2 /* CFAlertView */ = {
 			isa = PBXGroup;
 			children = (
-				06DCB2FD15F62C6A0053D8A2 /* CFAlertView.h */,
-				06DCB2FE15F62C6A0053D8A2 /* CFAlertView.m */,
+				06DCB2FD15F62C6A0053D8A2 /* WCAlertView.h */,
+				06DCB2FE15F62C6A0053D8A2 /* WCAlertView.m */,
 			);
 			name = CFAlertView;
 			path = External/CFAlertView;
@@ -267,7 +267,7 @@
 				06DCB2F215F62B430053D8A2 /* UIDevice+IdentifierAddition.m in Sources */,
 				06DCB2F715F62C180053D8A2 /* NSDate+Additional.m in Sources */,
 				06DCB2FB15F62C280053D8A2 /* NSArray+Plist.m in Sources */,
-				06DCB2FF15F62C6A0053D8A2 /* CFAlertView.m in Sources */,
+				06DCB2FF15F62C6A0053D8A2 /* WCAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
