@@ -18,14 +18,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+//    [WCAlertView setDefaultStyle:WCAlertViewStyleWhite];
     
     [WCAlertView showAlertWithTitle:@"Custom AlertView Title" message:@"You can do a lot of additional setup using WCAlertView. You can do a lot of additional setup using WCAlertView" customizationBlock:^(WCAlertView *alertView) {
-        alertView.style = WCAlertViewStyleVioletHatched;
+        //        alertView.style = WCAlertViewStyleVioletHatched;
     } completionBlock:^(NSUInteger buttonIndex, WCAlertView *alertView) {
         
-    } cancelButtonTitle:@"Cancel" otherButtonTitles:@"Okay",nil];
+    } cancelButtonTitle:@"Cancel" otherButtonTitles:@"Okay", nil];
+
+    
+    
+        
 	// Do any additional setup after loading the view, typically from a nib.
+    
+
+//    
+//    WCAlertView *alert = [[WCAlertView alloc] initWithTitle:@"Custom AlertView Title" message:@"You can do a lot of additional setup using WCAlertView. You can do a lot of additional setup using WCAlertView" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Okay", nil];
+//    [alert show];
 }
 
 - (void)didReceiveMemoryWarning

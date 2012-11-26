@@ -1,10 +1,27 @@
 //
-//  CFAlertView.m
-//  CFAlertView
+//  WCAlertView.m
+//  WCAlertView
 //
 //  Created by Michał Zaborowski on 18/07/12.
-//  Copyright (c) 2012 Codeflex limited. All rights reserved.
+//  Copyright (c) 2012 Michał Zaborowski. All rights reserved.
 //
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 
 #import "WCAlertView.h"
 #import <QuartzCore/QuartzCore.h>
@@ -27,6 +44,15 @@
 @synthesize buttonShadowBlur = _buttonShadowBlur;
 @synthesize buttonFont = _buttonFont;
 
+
+static WCAlertViewStyle kDefaultAlertStyle = WCAlertViewStyleDefault;
+
++ (void)setDefaultStyle:(WCAlertViewStyle)style
+{
+    
+    kDefaultAlertStyle = style;
+    
+}
 
 + (id)showAlertWithTitle:(NSString *)title message:(NSString *)message customizationBlock:(void (^)(WCAlertView *alertView))customization completionBlock:(void (^)(NSUInteger buttonIndex, WCAlertView *alertView))block cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
 {
@@ -115,7 +141,6 @@
 
 - (void)setDefaultStyle
 {
-    self.style = WCAlertViewStyleDefault;
     self.buttonShadowBlur = 2.0f;
     self.buttonShadowOffset = CGSizeMake(0.5f, 0.5f);
     self.labelShadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -126,6 +151,7 @@
     self.outerFrameShadowBlur = 6.0f;
     self.outerFrameShadowColor = [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:1.0f];
     self.outerFrameShadowOffset = CGSizeMake(0.0f, 1.0f);
+    self.style = kDefaultAlertStyle;
     
 }
 
@@ -153,7 +179,7 @@
             [self violetAlertHetched:YES];
             break;
         default:
-            self.style = WCAlertViewStyleDefault;
+            self.style = kDefaultAlertStyle;
             break;
     }
 }
@@ -283,13 +309,13 @@
         
         CGRect activeBounds = self.bounds;
         CGFloat cornerRadius = self.cornerRadius;
-        CGFloat inset = 6.0f;
+        CGFloat inset = 5.5f;
         CGFloat originX = activeBounds.origin.x + inset;
         CGFloat originY = activeBounds.origin.y + inset;
         CGFloat width = activeBounds.size.width - (inset*2.0f);
-        CGFloat height = activeBounds.size.height - ((inset+2.5)*2.0f);
+        CGFloat height = activeBounds.size.height - ((inset+2.0)*2.0f);
         
-        CGFloat buttonOffset = self.bounds.size.height - 48.5f;
+        CGFloat buttonOffset = self.bounds.size.height - 50.5f;
         
         CGRect bPathFrame = CGRectMake(originX, originY, width, height);
         CGPathRef path = [UIBezierPath bezierPathWithRoundedRect:bPathFrame cornerRadius:cornerRadius].CGPath;
